@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="robot_urdf">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="first_arm">
+        <link name="base_link" />
+        <link name="First_arm_link_one" />
+        <link name="First_arm_link_two" />
+        <link name="First_arm_link_three" />
+        <link name="First_arm_link_four" />
+        <link name="First_arm_gripper_link" />
+        <joint name="virtual_joint" />
+        <joint name="First_arm_joint_base_to_one" />
+        <joint name="First_arm_joint_one_to_two" />
+        <joint name="First_arm_joint_two_to_three" />
+        <joint name="First_arm_joint_three_to_four" />
+        <joint name="First_arm_gripper_joint" />
+    </group>
+    <group name="second_arm">
+        <link name="base_link" />
+        <link name="Second_arm_link_one" />
+        <link name="Second_arm_link_two" />
+        <link name="Second_arm_link_three" />
+        <link name="Second_arm_link_four" />
+        <joint name="virtual_joint" />
+        <joint name="Second_arm_joint_base_to_one" />
+        <joint name="Second_arm_joint_one_to_two" />
+        <joint name="Second_arm_joint_two_to_three" />
+        <joint name="Second_arm_joint_three_to_four" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="first_arm_default" group="first_arm">
+        <joint name="First_arm_gripper_joint" value="1.2775" />
+        <joint name="First_arm_joint_base_to_one" value="0" />
+        <joint name="First_arm_joint_one_to_two" value="0" />
+        <joint name="First_arm_joint_three_to_four" value="0" />
+        <joint name="First_arm_joint_two_to_three" value="0" />
+    </group_state>
+    <group_state name="move_to_berry" group="first_arm">
+        <joint name="First_arm_gripper_joint" value="1.2775" />
+        <joint name="First_arm_joint_base_to_one" value="0" />
+        <joint name="First_arm_joint_one_to_two" value="-0.2762" />
+        <joint name="First_arm_joint_three_to_four" value="-0.0345" />
+        <joint name="First_arm_joint_two_to_three" value="-0.1036" />
+    </group_state>
+    <group_state name="grab_berry" group="first_arm">
+        <joint name="First_arm_gripper_joint" value="0" />
+        <joint name="First_arm_joint_base_to_one" value="0" />
+        <joint name="First_arm_joint_one_to_two" value="-0.2762" />
+        <joint name="First_arm_joint_three_to_four" value="-0.0345" />
+        <joint name="First_arm_joint_two_to_three" value="-0.1036" />
+    </group_state>
+    <group_state name="cut_berry" group="second_arm">
+        <joint name="Second_arm_joint_base_to_one" value="0" />
+        <joint name="Second_arm_joint_one_to_two" value="0.6215" />
+        <joint name="Second_arm_joint_three_to_four" value="-0.3107" />
+        <joint name="Second_arm_joint_two_to_three" value="-0.3107" />
+    </group_state>
+    <group_state name="after_cut_berry" group="second_arm">
+        <joint name="Second_arm_joint_base_to_one" value="-1.5192" />
+        <joint name="Second_arm_joint_one_to_two" value="0.6215" />
+        <joint name="Second_arm_joint_three_to_four" value="-0.3107" />
+        <joint name="Second_arm_joint_two_to_three" value="-0.3107" />
+    </group_state>
+    <group_state name="place_berry" group="first_arm">
+        <joint name="First_arm_gripper_joint" value="0" />
+        <joint name="First_arm_joint_base_to_one" value="-0.9668" />
+        <joint name="First_arm_joint_one_to_two" value="-0.0691" />
+        <joint name="First_arm_joint_three_to_four" value="-2.0026" />
+        <joint name="First_arm_joint_two_to_three" value="-1.0704" />
+    </group_state>
+    <group_state name="release_berry" group="first_arm">
+        <joint name="First_arm_gripper_joint" value="0.587" />
+        <joint name="First_arm_joint_base_to_one" value="-0.9668" />
+        <joint name="First_arm_joint_one_to_two" value="-0.0691" />
+        <joint name="First_arm_joint_three_to_four" value="-2.0026" />
+        <joint name="First_arm_joint_two_to_three" value="-1.0704" />
+    </group_state>
+    <group_state name="second_arm_default" group="second_arm">
+        <joint name="Second_arm_joint_base_to_one" value="0" />
+        <joint name="Second_arm_joint_one_to_two" value="0" />
+        <joint name="Second_arm_joint_three_to_four" value="0" />
+        <joint name="Second_arm_joint_two_to_three" value="0" />
+    </group_state>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base_link" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="First_arm_gripper_link" link2="First_arm_link_four" reason="Adjacent" />
+    <disable_collisions link1="First_arm_link_four" link2="First_arm_link_three" reason="Adjacent" />
+    <disable_collisions link1="First_arm_link_one" link2="First_arm_link_two" reason="Adjacent" />
+    <disable_collisions link1="First_arm_link_one" link2="Second_arm_link_one" reason="Never" />
+    <disable_collisions link1="First_arm_link_one" link2="Second_arm_link_two" reason="Never" />
+    <disable_collisions link1="First_arm_link_one" link2="base_link" reason="Adjacent" />
+    <disable_collisions link1="First_arm_link_three" link2="First_arm_link_two" reason="Adjacent" />
+    <disable_collisions link1="First_arm_link_two" link2="Second_arm_link_one" reason="Never" />
+    <disable_collisions link1="Second_arm_link_four" link2="Second_arm_link_three" reason="Adjacent" />
+    <disable_collisions link1="Second_arm_link_one" link2="Second_arm_link_two" reason="Adjacent" />
+    <disable_collisions link1="Second_arm_link_one" link2="base_link" reason="Adjacent" />
+    <disable_collisions link1="Second_arm_link_three" link2="Second_arm_link_two" reason="Adjacent" />
+</robot>

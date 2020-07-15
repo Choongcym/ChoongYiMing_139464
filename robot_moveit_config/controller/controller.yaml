@@ -1,0 +1,19 @@
+controller_list:
+  - name: first_arm_controller
+    action_ns: "follow_joint_trajectory"
+    type: FollowJointTrajectory 
+    joints: 
+      - First_arm_joint_base_to_one
+      - First_arm_joint_one_to_two
+      - First_arm_joint_two_to_three
+      - First_arm_joint_three_to_four
+      - First_arm_gripper_joint
+    
+  - name: second_arm_controller
+    action_ns: "follow_joint_trajectory"
+    type: FollowJointTrajectory 
+    joints: 
+      - Second_arm_joint_base_to_one
+      - Second_arm_joint_one_to_two
+      - Second_arm_joint_two_to_three
+      - Second_arm_joint_three_to_four
