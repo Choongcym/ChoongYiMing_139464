@@ -1,0 +1,9 @@
+second_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints: 
+    - Second_arm_joint_base_to_one
+    - Second_arm_joint_one_to_two
+    - Second_arm_joint_two_to_three
+    - Second_arm_joint_three_to_four
+state_publish_rate: 25
+action_monitor_rate: 10
