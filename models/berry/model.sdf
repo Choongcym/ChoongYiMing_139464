@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="berry">
+    <static>false</static>
+    <link name="link">
+      
+	<inertial>
+                <pose>0 0 0 0 0 0</pose>
+                <inertia>
+                    <ixx>0.002586</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.0027975</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.0015441</izz>
+                </inertia>
+                <mass>1.004</mass>
+            </inertial>
+
+	<collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://berry/meshes/berry.STL</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>50</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://berry/meshes/berry.STL</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
